@@ -38,3 +38,12 @@ Después de dejar BTE Chile en noviembre 2024, me enfoqué en tres proyectos pri
 3. **Bloksel**: Un nuevo proyecto que inicié el 30 de abril y que sigue en desarrollo. 
 
 Esta página web renovada es parte de estos proyectos. Si quieres participar o saber más, únete apretando las imágenes del principio.
+
+# La Historia resumida de MetroMan en Build The Earth 
+
+<iframe width="560" height="315" 
+        src="https://youtu.be/sTXMSGO4L9I?si=jOR72ySq-RhYo4nu&utm_source=MTQxZ " 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen>
+</iframe> 
