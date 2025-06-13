@@ -5,13 +5,13 @@ language: es
 ---
 
 <div class="profile-box">
-  <div class="image-collage">
-    <a href="#"><img src="https://github.com/user-attachments/assets/9189e36c-2a1d-474a-97a3-6517b9d4d775" alt="Bloksel"></a>
-    <a href="#"><img src="https://github.com/user-attachments/assets/f2c8ffcf-4abd-4d9f-bb61-d6813428bc47" alt="Comunidad Metro de Santiago"></a>
-    <a href="#"><img src="https://github.com/user-attachments/assets/1b2434bd-3021-4694-82e9-f532146e169e" alt="MetroBot"></a>
-  </div>
   <div class="profile-text">
     <p>Soy MetroMan, Administrador en la Comunidad Metro de Santiago 🚇, creador del lenguaje construido "Balkeon" y programador de MetroBot</p>
+  </div> 
+  <div class="image-collage">
+    <a href="https://www.bloksel.com"><img src="https://github.com/user-attachments/assets/9189e36c-2a1d-474a-97a3-6517b9d4d775" alt="Bloksel"></a>
+    <a href="https://miniurl.cl/comunidadmetrostgo"><img src="https://github.com/user-attachments/assets/f2c8ffcf-4abd-4d9f-bb61-d6813428bc47" alt="Comunidad Metro de Santiago"></a>
+    <a href="#"><img src="https://github.com/user-attachments/assets/1b2434bd-3021-4694-82e9-f532146e169e" alt="MetroBot"></a>
   </div>
 </div>
 
