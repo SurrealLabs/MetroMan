@@ -1,50 +1,148 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="es">
 
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,maximum-scale=2">
-    <link rel="stylesheet" type="text/css" media="screen" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
 
-{% seo %}
-    {% include head-custom.html %}
-  </head>
+  {% seo %}
+  {% include head-custom.html %}
 
-  <body>
+  <style>
+    /* Top Navigation Bar */
+    .top-bar {
+      background-color: #d32f2f;
+      color: white;
+      padding: 0.5rem 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
 
-          <a href="/Balkeon-notes/"><h1 id="project_title">{{ site.title | default: site.github.repository_name }}</h1></a>
+    .logo {
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: white;
+      text-decoration: none;
+    }
 
-          {% if site.show_downloads %}
-            <section id="downloads">
-              <a class="zip_download_link" href="{{ site.github.zip_url }}">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="{{ site.github.tar_url }}">Download this project as a tar.gz file</a>
-            </section>
-          {% endif %}
-        </header>
-    </div>
+    /* Mobile Menu Button */
+    .menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        {{ content }}
-      </section>
-    </div>
+    /* Navigation Menu */
+    .nav-menu {
+      display: flex;
+      gap: 1.5rem;
+    }
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        {% if site.github.is_project_page %}
-        <p class="copyright">
-          <a href="{{ site.github.repository_url }}">{{ site.title | default: site.github.repository_name }}</a> maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a>
-        </p>
+    .nav-menu a {
+      color: white;
+      text-decoration: none;
+      transition: opacity 0.3s;
+    }
+
+    .nav-menu a:hover {
+      opacity: 0.8;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .menu-btn {
+        display: block;
+      }
+
+      .nav-menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: #b71c1c;
+        padding: 1rem;
+      }
+
+      .nav-menu.active {
+        display: flex;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Top Navigation Bar -->
+  <nav class="top-bar">
+    <div class="nav-container">
+      <a href="/Balkeon-notes/" class="logo">{{ site.title | default: site.github.repository_name }}</a>
+      
+      <button class="menu-btn" onclick="toggleMenu()">☰</button>
+      
+      <div class="nav-menu" id="navMenu">
+        <a href="/Balkeon-notes/">Inicio</a>
+        <a href="/Balkeon-notes/docs">Documentación</a>
+        <a href="/Balkeon-notes/ejemplos">Ejemplos</a>
+        {% if site.show_downloads %}
+        <a href="{{ site.github.zip_url }}">Descargar .zip</a>
+        <a href="{{ site.github.tar_url }}">Descargar .tar.gz</a>
         {% endif %}
-        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
-      </footer>
+      </div>
     </div>
-  </body>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="content-container">
+    <div class="content-wrapper">
+      {{ content }}
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      {% if site.github.is_project_page %}
+      <p class="copyright">
+        <a href="{{ site.github.repository_url }}">{{ site.title | default: site.github.repository_name }}</a> 
+        mantenido por <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a>
+      </p>
+      {% endif %}
+      <p>Publicado con <a href="https://pages.github.com">GitHub Pages</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    function toggleMenu() {
+      const menu = document.getElementById('navMenu');
+      menu.classList.toggle('active');
+    }
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function(event) {
+      const menu = document.getElementById('navMenu');
+      const btn = document.querySelector('.menu-btn');
+      
+      if (!menu.contains(event.target) && event.target !== btn) {
+        menu.classList.remove('active');
+      }
+    });
+  </script>
+</body>
 </html>
