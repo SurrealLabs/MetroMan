@@ -11,14 +11,11 @@
   {% include head-custom.html %}
 
   <style>
-    /* Top Navigation Bar */
+    /* Top Navigation Bar - Doesn't affect Markdown content */
     .top-bar {
       background-color: #d32f2f;
       color: white;
       padding: 0.5rem 1rem;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
       box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
 
@@ -37,17 +34,6 @@
       text-decoration: none;
     }
 
-    /* Mobile Menu Button */
-    .menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      color: white;
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-
-    /* Navigation Menu */
     .nav-menu {
       display: flex;
       gap: 1.5rem;
@@ -56,46 +42,28 @@
     .nav-menu a {
       color: white;
       text-decoration: none;
-      transition: opacity 0.3s;
     }
 
-    .nav-menu a:hover {
-      opacity: 0.8;
+    /* Original Content Styling Preserved */
+    #main_content_wrap {
+      margin-top: 20px;
     }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      .menu-btn {
-        display: block;
-      }
-
-      .nav-menu {
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background-color: #b71c1c;
-        padding: 1rem;
-      }
-
-      .nav-menu.active {
-        display: flex;
-      }
+    
+    /* Your existing Markdown content styles remain untouched */
+    .inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
     }
   </style>
 </head>
 
 <body>
-  <!-- Top Navigation Bar -->
+  <!-- Spanish Red Bar Navigation -->
   <nav class="top-bar">
     <div class="nav-container">
       <a href="/Balkeon-notes/" class="logo">{{ site.title | default: site.github.repository_name }}</a>
-      
-      <button class="menu-btn" onclick="toggleMenu()">☰</button>
-      
-      <div class="nav-menu" id="navMenu">
+      <div class="nav-menu">
         <a href="/Balkeon-notes/">Inicio</a>
         <a href="/Balkeon-notes/docs">Documentación</a>
         <a href="/Balkeon-notes/ejemplos">Ejemplos</a>
@@ -107,16 +75,16 @@
     </div>
   </nav>
 
-  <!-- Main Content -->
-  <main class="content-container">
-    <div class="content-wrapper">
-      {{ content }}
-    </div>
-  </main>
+  <!-- Original Content Structure Preserved Exactly -->
+  <div id="main_content_wrap" class="outer">
+    <section id="main_content" class="inner">
+      {{ content }} <!-- Your Markdown content renders here untouched -->
+    </section>
+  </div>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="footer-content">
+  <!-- Original Footer Preserved -->
+  <div id="footer_wrap" class="outer">
+    <footer class="inner">
       {% if site.github.is_project_page %}
       <p class="copyright">
         <a href="{{ site.github.repository_url }}">{{ site.title | default: site.github.repository_name }}</a> 
@@ -124,25 +92,7 @@
       </p>
       {% endif %}
       <p>Publicado con <a href="https://pages.github.com">GitHub Pages</a></p>
-    </div>
-  </footer>
-
-  <script>
-    // Mobile menu toggle
-    function toggleMenu() {
-      const menu = document.getElementById('navMenu');
-      menu.classList.toggle('active');
-    }
-
-    // Close menu when clicking outside
-    document.addEventListener('click', function(event) {
-      const menu = document.getElementById('navMenu');
-      const btn = document.querySelector('.menu-btn');
-      
-      if (!menu.contains(event.target) && event.target !== btn) {
-        menu.classList.remove('active');
-      }
-    });
-  </script>
+    </footer>
+  </div>
 </body>
 </html>
