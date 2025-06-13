@@ -11,7 +11,7 @@
   {% include head-custom.html %}
 
   <style>
-    /* Top Navigation Bar - Doesn't affect Markdown content */
+    /* Top Navigation Bar */
     .top-bar {
       background-color: #d32f2f;
       color: white;
@@ -37,11 +37,47 @@
     .nav-menu {
       display: flex;
       gap: 1.5rem;
+      position: relative;
     }
 
     .nav-menu a {
       color: white;
       text-decoration: none;
+      padding: 0.5rem;
+    }
+
+    /* Dropdown Styles */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .dropdown:hover .dropbtn {
+      background-color: #b71c1c;
     }
 
     /* Original Content Styling Preserved */
@@ -49,10 +85,16 @@
       margin-top: 20px;
     }
     
-    /* Your existing Markdown content styles remain untouched */
     .inner {
       max-width: 900px;
       margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Loading indicator */
+    .loading {
+      display: none;
+      text-align: center;
       padding: 20px;
     }
   </style>
@@ -64,21 +106,47 @@
     <div class="nav-container">
       <a href="/Balkeon-notes/" class="logo">{{ site.title | default: site.github.repository_name }}</a>
       <div class="nav-menu">
-        <a href="/Balkeon-notes/">Inicio</a>
-        <a href="/Balkeon-notes/docs">Documentación</a>
-        <a href="/Balkeon-notes/ejemplos">Ejemplos</a>
+        <a href="/Balkeon-notes/" class="nav-link" data-target="home">Inicio</a>
+        
+        <div class="dropdown">
+          <a href="#" class="dropbtn">Documentación</a>
+          <div class="dropdown-content">
+            <a href="/Balkeon-notes/docs/intro" class="nav-link" data-target="intro">Introducción</a>
+            <a href="/Balkeon-notes/docs/guia" class="nav-link" data-target="guia">Guía de Usuario</a>
+            <a href="/Balkeon-notes/docs/api" class="nav-link" data-target="api">Referencia API</a>
+          </div>
+        </div>
+        
+        <div class="dropdown">
+          <a href="#" class="dropbtn">Ejemplos</a>
+          <div class="dropdown-content">
+            <a href="/Balkeon-notes/ejemplos/basicos" class="nav-link" data-target="basicos">Ejemplos Básicos</a>
+            <a href="/Balkeon-notes/ejemplos/avanzados" class="nav-link" data-target="avanzados">Ejemplos Avanzados</a>
+          </div>
+        </div>
+        
         {% if site.show_downloads %}
-        <a href="{{ site.github.zip_url }}">Descargar .zip</a>
-        <a href="{{ site.github.tar_url }}">Descargar .tar.gz</a>
+        <div class="dropdown">
+          <a href="#" class="dropbtn">Descargas</a>
+          <div class="dropdown-content">
+            <a href="{{ site.github.zip_url }}">Descargar .zip</a>
+            <a href="{{ site.github.tar_url }}">Descargar .tar.gz</a>
+          </div>
+        </div>
         {% endif %}
       </div>
     </div>
   </nav>
 
-  <!-- Original Content Structure Preserved Exactly -->
+  <!-- Loading Indicator -->
+  <div id="loading" class="loading">
+    <p>Cargando contenido...</p>
+  </div>
+
+  <!-- Content Area -->
   <div id="main_content_wrap" class="outer">
     <section id="main_content" class="inner">
-      {{ content }} <!-- Your Markdown content renders here untouched -->
+      {{ content }} <!-- Initial content -->
     </section>
   </div>
 
@@ -94,5 +162,62 @@
       <p>Publicado con <a href="https://pages.github.com">GitHub Pages</a></p>
     </footer>
   </div>
+
+  <script>
+    // Dynamic Content Loading
+    document.addEventListener('DOMContentLoaded', function() {
+      const navLinks = document.querySelectorAll('.nav-link');
+      const mainContent = document.getElementById('main_content');
+      const loadingIndicator = document.getElementById('loading');
+      
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const target = this.getAttribute('data-target');
+          const url = this.getAttribute('href');
+          
+          // Show loading indicator
+          loadingIndicator.style.display = 'block';
+          mainContent.style.display = 'none';
+          
+          // Fetch the content
+          fetch(url)
+            .then(response => response.text())
+            .then(html => {
+              // Parse the HTML response
+              const parser = new DOMParser();
+              const doc = parser.parseFromString(html, 'text/html');
+              
+              // Extract the main content
+              const newContent = doc.querySelector('#main_content').innerHTML;
+              
+              // Update the page
+              mainContent.innerHTML = newContent;
+              
+              // Update browser history
+              history.pushState({ content: newContent }, '', url);
+              
+              // Hide loading indicator and show content
+              loadingIndicator.style.display = 'none';
+              mainContent.style.display = 'block';
+            })
+            .catch(error => {
+              console.error('Error loading content:', error);
+              loadingIndicator.style.display = 'none';
+              window.location.href = url; // Fallback to full page load
+            });
+        });
+      });
+      
+      // Handle back/forward navigation
+      window.addEventListener('popstate', function(e) {
+        if (e.state && e.state.content) {
+          mainContent.innerHTML = e.state.content;
+        } else {
+          window.location.reload();
+        }
+      });
+    });
+  </script>
 </body>
-</html>
+</html> 
