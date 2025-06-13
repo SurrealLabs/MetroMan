@@ -6,7 +6,7 @@ language: es
 
 <div class="profile-box">
   <div class="profile-text">
-    <p>Soy MetroMan, Administrador en la Comunidad Metro de Santiago 🚇, creador del lenguaje construido "Balkeon" y programador de MetroBot</p>
+    <p>Soy MetroMan, Administrador en la Comunidad Metro de Santiago 🚇, creador del lenguaje construido "Balkeon", programador del MetroBot y Fundador de Bloksel</p>
   </div> 
   <div class="image-collage">
     <a href="https://www.bloksel.com"><img src="https://github.com/user-attachments/assets/9189e36c-2a1d-474a-97a3-6517b9d4d775" alt="Bloksel"></a>
@@ -27,8 +27,14 @@ language: es
 
 # ¿Quién soy?
 
-Hola! Soy Metroman, empecé en 2020 con esta tal identidad en Internet, todo inició con la iniciativa de construir el Metro en BTE Chile cuando portaba uno de mis miles nombres "FGY Games", gracias a un compañero (actualmente inactivo) de ese servidor de Discord terminé adoptando mi nombre definitivo: MetroMan. No me pregunten si existirán problemas de CopyRight, ni yo sé, pero actualmente me estoy dedicando a ordenar mi vida preparándome para lo que quizás sea mi futuro: Redes Sociales y Traducción. Por eso aquí tienen una versión mejorada de mi antigua página web, con dominio personalizado y todo.
+Hola, soy MetroMan. Comencé con esta identidad en 2020 cuando participaba en BTE Chile como "FGY Games", trabajando en proyectos del Metro. El nombre MetroMan vino de un compañero de ese servidor (que ya no está activo).
 
-Expulsado de BTE Chile durante Noviembre 2024, pronto comentaré qué haré ahora con mis Redes Sociales, por mientras estoy armando un Conlang en un Servidor de Discord: [Aquí puedes Entrar](https://discord.gg/8NPsyq7rp7)
+Después de dejar BTE Chile en noviembre 2024, me enfoqué en tres proyectos principales:
 
-*Página en construcción*
+1. **Comunidad Metro de Santiago**: En marzo retomé la administración, en abril creé el subreddit oficial y reviví MetroBot, y a fines de mayo integré el grupo de WhatsApp existente. Hace dos semanas agregamos un canal de Telegram.
+
+2. **Balkeon**: Mi lenguaje construido personal, que he estado desarrollando como proyecto serio.
+
+3. **Bloksel**: Un nuevo proyecto que inicié el 30 de abril y que sigue en desarrollo.
+
+Esta página web renovada es parte de estos proyectos. Si quieres participar o saber más, únete apretando las imágenes del principio.
