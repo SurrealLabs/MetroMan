@@ -27,14 +27,14 @@ language: es
 
 # ¿Quién soy?
 
-Hola, soy MetroMan. Comencé con esta identidad en 2020 cuando participaba en BTE Chile como "FGY Games", trabajando en proyectos del Metro. El nombre MetroMan vino de un compañero de ese servidor (que ya no está activo).
+Hola, soy MetroMan. Comencé con esta identidad en 2020 cuando participaba en BTE Chile como "FGY Games", trabajando en recrear el Metro. El nombre MetroMan vino de un compañero de ese servidor (que ya no está activo).
 
-Después de dejar BTE Chile en noviembre 2024, me enfoqué en tres proyectos principales:
+Después de dejar BTE Chile en noviembre 2024, me enfoqué en tres proyectos principales durante 2025:
 
-1. **Comunidad Metro de Santiago**: En marzo retomé la administración, en abril creé el subreddit oficial y reviví MetroBot, y a fines de mayo integré el grupo de WhatsApp existente. Hace dos semanas agregamos un canal de Telegram.
+1. **Comunidad Metro de Santiago**: En marzo retomé la administración, en Abril creé el Subreddit y reviví al MetroBot, y a fines de mayo integré un grupo de WhatsApp que ya existía desde 2024. A inicios de Junio le hice un canal y de Telegram.
 
-2. **Balkeon**: Mi lenguaje construido personal, que he estado desarrollando como proyecto serio.
+2. **Balkeon**: Mi lenguaje construido personal, que he estado desarrollando una vez más retomando lo que había olvidado desde 2022.
 
-3. **Bloksel**: Un nuevo proyecto que inicié el 30 de abril y que sigue en desarrollo.
+3. **Bloksel**: Un nuevo proyecto que inicié el 30 de abril y que sigue en desarrollo. 
 
 Esta página web renovada es parte de estos proyectos. Si quieres participar o saber más, únete apretando las imágenes del principio.
