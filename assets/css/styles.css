@@ -176,3 +176,33 @@ p {
   margin: 0;
   font-size: 1.1em;
 }
+
+.profile-box {
+  background: #f5f5f5;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.images-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.images-row img {
+  width: 30%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.profile-text {
+  text-align: center;
+  padding: 10px;
+}
+
+.profile-text p {
+  margin: 0;
+  font-size: 1.1em;
+}
