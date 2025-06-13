@@ -374,3 +374,65 @@ p {
     text-align: center;
     padding: 20px;
 }
+
+/* Horizontal Image Row Styles */
+.image-collage {
+  display: flex;
+  justify-content: space-between; /* Evenly distributes space between images */
+  align-items: stretch; /* Makes all images same height */
+  gap: 20px; /* Consistent spacing between images */
+  width: 100%;
+  margin: 0 auto 25px;
+  padding-bottom: 5px; /* For hover effects */
+}
+
+.image-collage a {
+  flex: 1; /* Each image takes equal width */
+  min-width: 0; /* Fixes flexbox overflow issue */
+  height: 280px; /* Fixed height */
+  transition: transform 0.3s ease;
+}
+
+.image-collage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Maintains aspect ratio */
+  border-radius: 8px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  border: 1px solid #e1e4e8;
+  transition: all 0.3s ease;
+}
+
+/* Hover Effects */
+.image-collage a:hover {
+  transform: translateY(-5px);
+}
+
+.image-collage img:hover {
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  border-color: #d32f2f;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 900px) {
+  .image-collage a {
+    height: 240px;
+  }
+}
+
+@media (max-width: 768px) {
+  .image-collage {
+    flex-wrap: wrap;
+  }
+  .image-collage a {
+    flex: 1 1 45%; /* Two images per row */
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .image-collage a {
+    flex: 1 1 100%; /* Stack vertically */
+    height: 220px;
+  }
+}
