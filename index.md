@@ -4,6 +4,17 @@ title: "Página Principal"
 language: es
 ---
 
+<div class="profile-box">
+  <div class="image-collage">
+    <a href="#"><img src="![InShot_20250514_082539049](https://github.com/user-attachments/assets/9189e36c-2a1d-474a-97a3-6517b9d4d775)" alt="Bloksel"></a>
+    <a href="#"><img src="![Screenshot_20250529_070149_com_microsoft_emmx_ChromeTabbedActivity](https://github.com/user-attachments/assets/f2c8ffcf-4abd-4d9f-bb61-d6813428bc47)" alt="Comunidad Metro de Santiago"></a>
+    <a href="#"><img src="![c64944e090f7b76690b1234a66a81d32](https://github.com/user-attachments/assets/1b2434bd-3021-4694-82e9-f532146e169e)
+" alt="MetroBot"></a>
+  </div>
+</div>
+
+<p>Soy MetroMan, Administrador en la Comunidad Metro de Santiago 🚇, creador del lenguaje construido "Balkeon" y programador de MetroBot</p>
+
 <button class="button-82-pushable" role="button" onclick="location.href='balkeon'">
   <span class="button-82-shadow"></span>
   <span class="button-82-edge"></span>
