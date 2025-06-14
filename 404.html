@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 - Page Not Found</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+    }
+    
+    .container {
+      max-width: 800px;
+      padding: 2rem;
+    }
+    
+    h1 {
+      font-size: 3rem;
+      color: #d9534f;
+      margin-bottom: 1rem;
+    }
+    
+    .metro-image {
+      max-width: 300px;
+      margin: 2rem auto;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+    }
+    
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      background-color: #d9534f;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: bold;
+      transition: background-color 0.3s;
+      margin: 0.5rem;
+    }
+    
+    .btn:hover {
+      background-color: #c9302c;
+    }
+    
+    .language-switch {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+    }
+    
+    .language-switch a {
+      color: #d9534f;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 id="error-title">404</h1>
+    <img src="https://metroman.me/assets/images/404.png" alt="Lost in Metro" class="metro-image" id="metro-image">
+    <p id="error-message">Oops! You've taken a wrong turn in the metro network.</p>
+    <div>
+      <a href="/" class="btn" id="home-btn">Take me home</a>
+      <a href="/comunidades/metro-de-santiago" class="btn" id="community-btn">Metro Community</a>
+    </div>
+    <div class="language-switch">
+      <a id="language-toggle">Ver en español</a>
+    </div>
+  </div>
+
+  <script>
+    // Language detection and content switching
+    const content = {
+      en: {
+        title: "404 - Lost in the Metro",
+        message: "Oops! You've taken a wrong turn in the metro network.",
+        homeBtn: "Take me home",
+        communityBtn: "Metro Community",
+        languageToggle: "Ver en español",
+        imageAlt: "Lost in Metro"
+      },
+      es: {
+        title: "404 - Perdido en el Metro",
+        message: "¡Ups! Has tomado un giro equivocado en la red del metro.",
+        homeBtn: "Llévame a casa",
+        communityBtn: "Comunidad Metro",
+        languageToggle: "View in English",
+        imageAlt: "Perdido en el Metro"
+      }
+    };
+
+    // Check for language preference
+    const userLang = navigator.language.startsWith('es') ? 'es' : 'en';
+    const pathLang = window.location.pathname.includes('/es/') ? 'es' : 'en';
+    let currentLang = pathLang || userLang;
+
+    // Set initial content
+    updateContent(currentLang);
+
+    // Toggle language
+    document.getElementById('language-toggle').addEventListener('click', function() {
+      currentLang = currentLang === 'en' ? 'es' : 'en';
+      updateContent(currentLang);
+      
+      // Update URL without reloading (for demo purposes)
+      const newPath = currentLang === 'es' ? 
+        window.location.pathname.replace('/en/', '/es/') || '/es/404' :
+        window.location.pathname.replace('/es/', '/en/') || '/en/404';
+      history.pushState({}, '', newPath);
+    });
+
+    function updateContent(lang) {
+      const langContent = content[lang];
+      document.getElementById('error-title').textContent = lang === 'en' ? '404' : '404';
+      document.getElementById('error-message').textContent = langContent.message;
+      document.getElementById('home-btn').textContent = langContent.homeBtn;
+      document.getElementById('community-btn').textContent = langContent.communityBtn;
+      document.getElementById('language-toggle').textContent = langContent.languageToggle;
+      document.getElementById('metro-image').alt = langContent.imageAlt;
+    }
+  </script>
+</body>
+</html>
