@@ -1,6 +1,6 @@
 ---
 layout:default
-title: Lineamientos Comunidad Metro de Santiago 🚇 
+title: "Lineamientos Comunidad Metro de Santiago" 
 ---
 
 # 📜 Lineamientos  
