@@ -1,5 +1,5 @@
 ---
-layout:default
+layout: default
 title: "Lineamientos Comunidad Metro de Santiago" 
 ---
 
