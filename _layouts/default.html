@@ -16,39 +16,79 @@
   <!-- Spanish Red Bar Navigation -->
   <nav class="top-bar">
     <div class="nav-container">
-      <a href="/Balkeon-notes/" class="logo">{{ site.title | default: site.github.repository_name }}</a>
+      <!-- Logo and Site Title -->
+      <a href="/Balkeon-notes/" class="logo">
+        <img src="/assets/images/logo.png" alt="MetroMan Logo" class="nav-logo">
+        <span>{{ site.title | default: site.github.repository_name }}</span>
+      </a>
       
+      <!-- Mobile Menu Button -->
       <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
       
+      <!-- Main Navigation Menu -->
       <div class="nav-menu">
-        <a href="/Balkeon-notes/" class="nav-link" data-target="home">Inicio</a>
+        <!-- ===== EASILY EDITABLE NAVIGATION ITEMS ===== -->
+        <!-- 
+          To modify menu items:
+          1. Copy/paste a dropdown block or single link
+          2. Update the text and href values
+          3. Add/remove items as needed
+        -->
         
+        <!-- Home Link (Single Item) -->
+        <a href="/MetroMan/" class="nav-link" data-target="home">Inicio</a>
+        
+        <!-- Documentation Dropdown -->
         <div class="dropdown">
-          <button class="dropbtn">Documentación</button>
+          <button class="dropbtn">Metro de Santiago</button>
           <div class="dropdown-content">
-            <a href="/Balkeon-notes/docs/intro" class="nav-link" data-target="intro">Introducción</a>
-            <a href="/Balkeon-notes/docs/guia" class="nav-link" data-target="guia">Guía de Usuario</a>
-            <a href="/Balkeon-notes/docs/api" class="nav-link" data-target="api">Referencia API</a>
+            <!-- Documentation Links - Edit these -->
+           <a href="/MetroMan/comunidades/metro-de-santiago" class="nav-link" data-target="intro">Comunidad Metro de Santiago</a>            
+            <a href="/MetroMan/MetroBot" class="nav-link" data-target="api">Referencia API</a>
+            <!-- Add more documentation links as needed -->
           </div>
         </div>
         
+        <!-- Examples Dropdown -->
         <div class="dropdown">
-          <button class="dropbtn">Ejemplos</button>
+          <button class="dropbtn">Creaciones</button>
           <div class="dropdown-content">
-            <a href="/Balkeon-notes/ejemplos/basicos" class="nav-link" data-target="basicos">Ejemplos Básicos</a>
-            <a href="/Balkeon-notes/ejemplos/avanzados" class="nav-link" data-target="avanzados">Ejemplos Avanzados</a>
+            <!-- Example Links - Edit these -->
+            <a href="/MetroMan/bloksel" class="nav-link" data-target="basicos">Bloksel</a>
+            <a href="/MetroMan/balkeon"  class="nav-link" data-target="avanzados">Balkeon</a>
+            
+            <!-- Add more example links as needed -->
           </div>
         </div>
         
+        <!-- Downloads Dropdown (Conditional) -->
         {% if site.show_downloads %}
         <div class="dropdown">
           <button class="dropbtn">Descargas</button>
           <div class="dropdown-content">
+            <!-- Download Links - Edit these -->
             <a href="{{ site.github.zip_url }}">Descargar .zip</a>
             <a href="{{ site.github.tar_url }}">Descargar .tar.gz</a>
+            <a href="/Balkeon-notes/downloads/extra" class="nav-link" data-target="extra">Archivos Extra</a>
+            <!-- Add more download links as needed -->
           </div>
         </div>
         {% endif %}
+        
+        <!-- Additional Menu Items -->
+        <!-- 
+          Uncomment and edit these blocks to add more dropdowns or single links
+          
+        <div class="dropdown">
+          <button class="dropbtn">Más Opciones</button>
+          <div class="dropdown-content">
+            <a href="/Balkeon-notes/opcion1" class="nav-link" data-target="opcion1">Opción 1</a>
+            <a href="/Balkeon-notes/opcion2" class="nav-link" data-target="opcion2">Opción 2</a>
+          </div>
+        </div>
+        
+        <a href="/Balkeon-notes/contacto" class="nav-link" data-target="contacto">Contacto</a>
+        -->
       </div>
     </div>
   </nav>
