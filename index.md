@@ -15,23 +15,13 @@ language: es
   </div>
 </div>
 
-<button class="button-82-pushable" role="button" onclick="location.href='balkeon'">
-  <span class="button-82-shadow"></span>
-  <span class="button-82-edge"></span>
-  <span class="button-82-front text">
-    Aprende Balkeon
-  </span>
-</button>
-
-# Red de Comunidad del Metro de Santiago [aquí](https://www.metroman.me/comunidades/comunidad-metro-de-santiago/)
-
 # ¿Quién soy?
 
 Hola, soy MetroMan. Comencé con esta identidad en 2020 cuando participaba en BTE Chile como "FGY Games", trabajando en recrear el Metro. El nombre MetroMan vino de un compañero de ese servidor (que ya no está activo).
 
 Después de dejar BTE Chile en noviembre 2024, me enfoqué en tres proyectos principales durante 2025:
 
-1. **Comunidad Metro de Santiago**: En marzo retomé la administración, en Abril creé el Subreddit y reviví al MetroBot, y a fines de mayo integré un grupo de WhatsApp que ya existía desde 2024. A inicios de Junio le hice un canal y de Telegram.
+1. **Comunidad Metro de Santiago**: En Marzo retomé la administración, en Abril creé el Subreddit y reviví al MetroBot, y a fines de mayo integré un grupo de WhatsApp que ya existía desde 2024. A inicios de Junio le hice un canal y de Telegram.
 
 2. **Balkeon**: Mi lenguaje construido personal, que he estado desarrollando una vez más retomando lo que había olvidado desde 2022.
 
