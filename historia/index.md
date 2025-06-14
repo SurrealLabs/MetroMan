@@ -3,6 +3,21 @@ layout: default
 title: "La Historia del Hombre del Metro" 
 ---
 
+<style>
+  .responsive-img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  @media (max-width: 768px) {
+    .responsive-img {
+      width: 100%;
+    }
+  }
+</style>
+
 # La Historia de MetroMan 
 
 Narraré esta página en primera persona, para dejarles una pincelada de mi trayectoria a través de Internet desde el principio. 
@@ -15,7 +30,7 @@ En 2014 empecé a aparecer en Internet, subiendo contenido de Five Nights at Fre
 
 Luego de un tiempo me convertí en FGYGames. 
 
-- ![FGY Logo](/assets/images/FGYLogo.jpg)
+- ![FGY Logo](/assets/images/FGYLogo.jpg){: .responsive-img}
 
 El primer tweet que encontré es de 2017 pero debe remontarse a 2016, habiendo creado esa cuenta en 2015. 
 
@@ -23,9 +38,9 @@ Durante esta etapa empecé a crear juegos. Iniciando con Nine Nights at Sam's, l
 
 ## El Yate
 
-- ![Gerardo Logo](/assets/images/Gerardologo.jpg)
+- ![Gerardo Logo](/assets/images/Gerardologo.jpg){: .responsive-img}
 
-- ![Yakiyardo Elyate Logo](/assets/images/yakiyardoelyatelogo.jpg)
+- ![Yakiyardo Elyate Logo](/assets/images/yakiyardoelyatelogo.jpg){: .responsive-img}
 
 No poco después me convertí en Yakiyardo el Yate, siendo que entre mitades de 2019 e inicios de 2020 empecé a subir videos a YouTube. 
 
@@ -40,28 +55,28 @@ Buscando en Internet encontré Build the Earth, y un poco me costó convencerme 
 
 En Build The Earth: Chile me apodó un constructor con el Nombre de MetroMan ya que me juré hacer todo el Metro en Vida Real. Ahí me convertí en MetroMan y creé mi primer logo. 
 
-- ![Pre-Metro Logo 2020](/assets/images/premetrologo2020.png)
+- ![Pre-Metro Logo 2020](/assets/images/premetrologo2020.png){: .responsive-img}
 
 Luego le pedí a los miembros de una comunidad crearme logos y estos son algunos de ellos:
 
-- ![Proto MetroMan Logo 01](/assets/images/protoMetroManlogo01.jpg)
-- ![Proto MetroMan Logo 02](/assets/images/protoMetroManlogo02.jpg)
-- ![Proto Metro Logo 03](/assets/images/protometrologo03.jpg)
+- ![Proto MetroMan Logo 01](/assets/images/protoMetroManlogo01.jpg){: .responsive-img}
+- ![Proto MetroMan Logo 02](/assets/images/protoMetroManlogo02.jpg){: .responsive-img}
+- ![Proto Metro Logo 03](/assets/images/protometrologo03.jpg){: .responsive-img}
 
 De los cuales finalmente ganó este, que me lo concedió Brownie, yo haciéndole los detalles finales. Este logo duró 4 años, y vió a MetroMan alzarse y derrumbarse. 
 
-- ![Metro Logo 2020](/assets/images/metrologo2020.png)
+- ![Metro Logo 2020](/assets/images/metrologo2020.png){: .responsive-img}
 
 En la mitad del camino intenté empezar de 0 llamándome pandamonochromatic, sin embargo duró meses la idea ya que me pillaron igual y se dieron cuenta igual que ese pandamonochromatic era yo. Además de un baneo por, cosas. 
 
 Al continuar en BTE Chile finalmente admití que mejor me quedaba seguir siendo MetroMan y me hice este logo para darlo por sentado.
 
-- ![Panda Metro Logo](/assets/images/pandametrologo.jpg)
+- ![Panda Metro Logo](/assets/images/pandametrologo.jpg){: .responsive-img}
 
 Pasaron los años y muchas cosas cambiaron. Quería regresar a BTE Chile así que me hice una versión 2.0, consolidando que iniciaba MetroMan 2.0
 
-- ![Metro Logo 2024](/assets/images/MetroLogo2024.png)
+- ![Metro Logo 2024](/assets/images/MetroLogo2024.png){: .responsive-img}
 
 Pero morí en menos de 3 meses y me expulsaron definitivamente. Ahora estoy trabajando en un juego llamado Bloksel, soy Administrador de la Comunidad Metro de Santiago y programador en jefe de MetroBot. 
 
-Se verá cómo continúa esta historia. 
+Se verá cómo continúa esta historia.
