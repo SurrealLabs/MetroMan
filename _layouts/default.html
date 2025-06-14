@@ -138,7 +138,7 @@
       languageToggle.addEventListener('click', toggleLanguage);
       
       // Check browser language preference on first load
-      if (!sessionStorage.getItem('languageChecked') {
+      if (!sessionStorage.getItem('languageChecked')) {
         const userPrefersEnglish = navigator.language.startsWith('en');
         const shouldRedirect = userPrefersEnglish && !isEnglish && currentPath === '/MetroMan/';
         
