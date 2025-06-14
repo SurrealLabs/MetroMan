@@ -17,8 +17,8 @@
   <nav class="top-bar">
     <div class="nav-container">
       <!-- Logo and Site Title -->
-      <a href="/MetroMan/" class="logo">
-        <img src="/MetroMan/assets/images/MetroLogo2024.png" alt="MetroMan Logo" class="nav-logo">
+      <a href="/" class="logo">
+        <img src="/assets/images/MetroLogo2024.png" alt="MetroMan Logo" class="nav-logo">
         <span>{{ site.title | default: site.github.repository_name }}</span>
       </a>
       
@@ -33,15 +33,15 @@
         </div>
         
         <!-- Home Link (Single Item) -->
-        <a href="/MetroMan/" class="nav-link" data-target="home">Inicio</a>
+        <a href="/" class="nav-link" data-target="home">Inicio</a>
         
         <!-- Documentation Dropdown -->
         <div class="dropdown">
           <button class="dropbtn">Metro de Santiago</button>
           <div class="dropdown-content">
             <!-- Documentation Links - Edit these -->
-           <a href="/MetroMan/comunidades/metro-de-santiago" class="nav-link" data-target="intro">Comunidad Metro de Santiago</a>            
-            <a href="/MetroMan/MetroBot" class="nav-link" data-target="api">Referencia API</a>
+           <a href="/comunidades/metro-de-santiago" class="nav-link" data-target="intro">Comunidad Metro de Santiago</a>            
+            <a href="/MetroBot" class="nav-link" data-target="api">Referencia API</a>
             <!-- Add more documentation links as needed -->
           </div>
         </div>
@@ -51,8 +51,8 @@
           <button class="dropbtn">Creaciones</button>
           <div class="dropdown-content">
             <!-- Example Links - Edit these -->
-            <a href="/MetroMan/bloksel" class="nav-link" data-target="basicos">Bloksel</a>
-            <a href="/MetroMan/balkeon"  class="nav-link" data-target="avanzados">Balkeon</a>
+            <a href="/bloksel" class="nav-link" data-target="basicos">Bloksel</a>
+            <a href="/balkeon"  class="nav-link" data-target="avanzados">Balkeon</a>
             
             <!-- Add more example links as needed -->
           </div>
@@ -143,9 +143,9 @@
         const shouldRedirect = userPrefersEnglish && !isEnglish && currentPath === '/MetroMan/';
         
         if (shouldRedirect) {
-          checkPathExists('/MetroMan/en/').then(exists => {
+          checkPathExists('/en/').then(exists => {
             if (exists) {
-              window.location.href = '/MetroMan/en/';
+              window.location.href = '/en/';
             }
           });
         }
@@ -209,7 +209,7 @@
           
           // Add language prefix if in English mode
           if (isEnglish && !url.includes('/en/')) {
-            url = url.replace('/MetroMan/', '/MetroMan/en/');
+            url = url.replace('/', '/en/');
           }
           
           // Close mobile menu if open
