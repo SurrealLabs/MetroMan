@@ -1,3 +1,8 @@
+---
+layout: default 
+title: "La Historia del Hombre del Metro" 
+---
+
 # La Historia de MetroMan 
 
 Narraré esta página en primera persona, para dejarles una pincelada de mi trayectoria a través de Internet desde el principio. 
