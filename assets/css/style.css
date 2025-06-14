@@ -1,4 +1,4 @@
-/* ===== BASE STYLES (UNCHANGED) ===== */
+/* ===== BASE STYLES ===== */
 body {
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
@@ -31,7 +31,139 @@ p {
     margin-bottom: 1.2em;
 }
 
-/* ===== BUTTON STYLES (UNCHANGED) ===== */
+/* ===== TOP NAVIGATION BAR ===== */
+.top-bar {
+    background-color: #d32f2f;
+    color: white;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 1000;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Logo styles */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.nav-logo {
+    height: 30px;
+    width: auto;
+    display: block;
+}
+
+.logo span {
+    color: white;
+}
+
+/* ===== NAVIGATION MENU ===== */
+.nav-menu {
+    display: flex;
+    gap: 1.5rem;
+    position: relative;
+}
+
+.nav-menu a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem;
+    display: block;
+    white-space: nowrap;
+}
+
+/* ===== DROPDOWN MENUS - EASILY EDITABLE STYLES ===== */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background: none;
+    border: none;
+    color: white;
+    padding: 0.5rem;
+    font-size: inherit;
+    font-family: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    top: 100%;
+    left: 0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Show dropdown on hover or when active */
+.dropdown:hover .dropdown-content,
+.dropdown.active .dropdown-content {
+    display: block;
+}
+
+/* ===== MOBILE MENU BUTTON ===== */
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    margin-left: auto;
+}
+
+/* ===== LOADING INDICATOR ===== */
+.loading {
+    display: none;
+    text-align: center;
+    padding: 20px;
+}
+
+/* ===== CONTENT WRAPPER ===== */
+#main_content_wrap {
+    margin-top: 20px;
+}
+
+.inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* ===== BUTTON STYLES ===== */
 .button-82-pushable {
     position: relative;
     border: none;
@@ -102,7 +234,7 @@ p {
 
 .button-82-pushable:active .button-82-front {
     transform: translateY(-2px);
-    transition: transform 34ms);
+    transition: transform 34ms;
 }
 
 .button-82-pushable:hover .button-82-shadow {
@@ -112,24 +244,51 @@ p {
 
 .button-82-pushable:active .button-82-shadow {
     transform: translateY(1px);
-    transition: transform 34ms);
+    transition: transform 34ms;
 }
 
 .button-82-pushable:focus:not(:focus-visible) {
     outline: none;
 }
 
-/* ===== CONSTRUCTION NOTICE (UNCHANGED) ===== */
-.construction-notice {
-    margin-top: 40px;
-    padding: 15px;
-    background-color: #fff3cd;
-    border-left: 5px solid #ffc107;
-    color: #856404;
-    font-style: italic;
+/* ===== IMAGE COLLAGE ===== */
+.image-collage {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 20px;
+    width: 100%;
+    margin: 0 auto 25px;
+    padding-bottom: 5px;
 }
 
-/* ===== PROFILE CONTAINER (UNCHANGED) ===== */
+.image-collage a {
+    flex: 1;
+    min-width: 0;
+    height: 280px;
+    transition: transform 0.3s ease;
+}
+
+.image-collage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    border: 1px solid #e1e4e8;
+    transition: all 0.3s ease;
+}
+
+.image-collage a:hover {
+    transform: translateY(-5px);
+}
+
+.image-collage img:hover {
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    border-color: #d32f2f;
+}
+
+/* ===== PROFILE STYLES ===== */
 .profile-container {
     display: flex;
     flex-wrap: wrap;
@@ -151,7 +310,6 @@ p {
     font-size: 1.1em;
 }
 
-/* ===== ENHANCED PROFILE BOX & IMAGE COLLAGE ===== */
 .profile-box {
     background: #f8f9fa;
     border-radius: 10px;
@@ -161,40 +319,6 @@ p {
     border: 1px solid #e1e4e8;
     width: 100%;
     box-sizing: border-box;
-}
-
-.image-collage {
-    display: flex;
-    justify-content: space-between;
-    align-items: stretch;
-    gap: 25px;
-    width: 100%;
-    margin-bottom: 25px;
-}
-
-.image-collage a {
-    flex: 1;
-    min-width: 0;
-    height: 280px;
-    display: flex;
-    transition: transform 0.3s ease;
-}
-
-.image-collage a:hover {
-    transform: translateY(-5px);
-}
-
-.image-collage img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-}
-
-.image-collage img:hover {
-    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
 }
 
 .profile-text {
@@ -211,87 +335,14 @@ p {
     line-height: 1.5;
 }
 
-/* ===== NAVIGATION STYLES (UNCHANGED) ===== */
-.top-bar {
-    background-color: #d32f2f;
-    color: white;
-    padding: 0.5rem 1rem;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-.nav-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.logo {
-    font-weight: bold;
-    font-size: 1.2rem;
-    color: white;
-    text-decoration: none;
-}
-
-.nav-menu {
-    display: flex;
-    gap: 1.5rem;
-    position: relative;
-}
-
-.nav-menu a {
-    color: white;
-    text-decoration: none;
-    padding: 0.5rem;
-}
-
-.dropdown {
-    position: relative;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    left: 0;
-}
-
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown-content a:hover {
-    background-color: #f1f1f1;
-}
-
-.dropdown.active .dropdown-content {
-    display: block;
-}
-
-.dropbtn {
-    background: none;
-    border: none;
-    color: white;
-    padding: 0.5rem;
-    font-size: inherit;
-    font-family: inherit;
-    cursor: pointer;
-}
-
-.mobile-menu-btn {
-    display: none;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.5rem;
-    cursor: pointer;
+/* ===== CONSTRUCTION NOTICE ===== */
+.construction-notice {
+    margin-top: 40px;
+    padding: 15px;
+    background-color: #fff3cd;
+    border-left: 5px solid #ffc107;
+    color: #856404;
+    font-style: italic;
 }
 
 /* ===== RESPONSIVE STYLES ===== */
@@ -302,6 +353,7 @@ p {
 }
 
 @media (max-width: 768px) {
+    /* Mobile menu styles */
     .nav-menu {
         display: none;
         flex-direction: column;
@@ -333,6 +385,12 @@ p {
         display: block;
     }
 
+    /* Adjust logo size */
+    .nav-logo {
+        height: 24px;
+    }
+
+    /* Image collage adjustments */
     .image-collage {
         flex-wrap: wrap;
     }
@@ -356,83 +414,9 @@ p {
     .button-82-pushable {
         width: 100%;
     }
-}
-
-/* ===== CONTENT WRAPPER STYLES (UNCHANGED) ===== */
-#main_content_wrap {
-    margin-top: 20px;
-}
-
-.inner {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.loading {
-    display: none;
-    text-align: center;
-    padding: 20px;
-}
-
-/* Horizontal Image Row Styles */
-.image-collage {
-  display: flex;
-  justify-content: space-between; /* Evenly distributes space between images */
-  align-items: stretch; /* Makes all images same height */
-  gap: 20px; /* Consistent spacing between images */
-  width: 100%;
-  margin: 0 auto 25px;
-  padding-bottom: 5px; /* For hover effects */
-}
-
-.image-collage a {
-  flex: 1; /* Each image takes equal width */
-  min-width: 0; /* Fixes flexbox overflow issue */
-  height: 280px; /* Fixed height */
-  transition: transform 0.3s ease;
-}
-
-.image-collage img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Maintains aspect ratio */
-  border-radius: 8px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-  border: 1px solid #e1e4e8;
-  transition: all 0.3s ease;
-}
-
-/* Hover Effects */
-.image-collage a:hover {
-  transform: translateY(-5px);
-}
-
-.image-collage img:hover {
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-  border-color: #d32f2f;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 900px) {
-  .image-collage a {
-    height: 240px;
-  }
-}
-
-@media (max-width: 768px) {
-  .image-collage {
-    flex-wrap: wrap;
-  }
-  .image-collage a {
-    flex: 1 1 45%; /* Two images per row */
-    height: 200px;
-  }
-}
-
-@media (max-width: 480px) {
-  .image-collage a {
-    flex: 1 1 100%; /* Stack vertically */
-    height: 220px;
-  }
+    
+    /* Smaller logo on very small screens */
+    .nav-logo {
+        height: 20px;
+    }
 }
