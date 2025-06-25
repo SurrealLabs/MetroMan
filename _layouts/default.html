@@ -10,6 +10,61 @@
   {% seo %}
   {% include head-custom.html %}
 
+  <!-- Translation Configuration -->
+  <script>
+    const translations = {
+      'en': {
+        'home': 'Home',
+        'metro': 'Santiago Metro',
+        'creations': 'Creations',
+        'downloads': 'Downloads',
+        'loading': 'Loading content...',
+        'social': 'My Social Media',
+        'community': 'Metro Community',
+        'api': 'API Reference',
+        'bloksel': 'Bloksel',
+        'balkeon': 'Balkeon',
+        'extra': 'Extra Files',
+        'language': 'Language'
+      },
+      'es': {
+        'home': 'Inicio',
+        'metro': 'Metro de Santiago',
+        'creations': 'Creaciones',
+        'downloads': 'Descargas',
+        'loading': 'Cargando contenido...',
+        'social': 'Mis Redes Sociales',
+        'community': 'Comunidad Metro de Santiago',
+        'api': 'Referencia API',
+        'bloksel': 'Bloksel',
+        'balkeon': 'Balkeon',
+        'extra': 'Archivos Extra',
+        'language': 'Idioma'
+      },
+      'bk': {
+        'home': 'Home',
+        'metro': 'Metro de Santiago',
+        'creations': 'Papemseon',
+        'downloads': 'Downloads',
+        'loading': 'Loading content...',
+        'social': 'My Social Media',
+        'community': 'Komunupeon Metro de Santiago',
+        'api': 'Reference API',
+        'bloksel': 'Bloksel',
+        'balkeon': 'Balkeon',
+        'extra': 'Extra files',
+        'language': 'Iomeon'
+      }
+    };
+
+    // Function to get current language from path
+    function getCurrentLanguage() {
+      const path = window.location.pathname;
+      if (path.includes('/en/')) return 'en';
+      if (path.includes('/bk/')) return 'bk';
+      return 'es'; // default
+    }
+  </script>
 </head>
 
 <body>
@@ -29,7 +84,7 @@
       <div class="nav-menu">
         <!-- Language Switcher -->
         <div class="language-switcher">
-          <button class="language-btn" id="languageToggle">EN/ES</button>
+          <button class="language-btn" id="languageToggle">EN/ES/BK</button>
         </div>
         
         <!-- Home Link (Single Item) -->
@@ -140,28 +195,72 @@
 </div>
 
   <script>
+    // Apply translations based on current language
+    function applyTranslations(lang) {
+      const translation = translations[lang];
+      if (!translation) return;
+
+      // Update navigation elements
+      document.querySelector('[data-target="home"]').textContent = translation.home;
+      document.querySelectorAll('.dropbtn').forEach(btn => {
+        if (btn.textContent.includes('Metro de Santiago')) btn.textContent = translation.metro;
+        if (btn.textContent.includes('Creaciones')) btn.textContent = translation.creations;
+        if (btn.textContent.includes('Descargas')) btn.textContent = translation.downloads;
+      });
+      
+      // Update dropdown links
+      document.querySelector('[data-target="intro"]').textContent = translation.community;
+      document.querySelector('[data-target="api"]').textContent = translation.api;
+      document.querySelector('[data-target="basicos"]').textContent = translation.bloksel;
+      document.querySelector('[data-target="avanzados"]').textContent = translation.balkeon;
+      document.querySelector('[data-target="extra"]').textContent = translation.extra;
+      
+      // Update loading text
+      document.querySelector('#loading p').textContent = translation.loading;
+      
+      // Update social header
+      document.querySelector('.social-header').textContent = translation.social;
+      
+      // Update language toggle button
+      document.getElementById('languageToggle').textContent = translation.language;
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
       // Language detection and path management
       const currentPath = window.location.pathname;
-      const isEnglish = currentPath.includes('/en/');
+      const currentLang = getCurrentLanguage();
       const languageToggle = document.getElementById('languageToggle');
       
+      // Apply translations
+      applyTranslations(currentLang);
+      
       // Set initial language button text
-      languageToggle.textContent = isEnglish ? 'ES' : 'EN';
+      languageToggle.textContent = currentLang.toUpperCase();
       
       // Function to toggle language paths
       function toggleLanguage() {
-        const newPath = isEnglish ? 
-          currentPath.replace('/en/', '/es/') : 
-          '/en' + currentPath;
+        const currentLang = getCurrentLanguage();
+        let newLang, newPath;
+        
+        // Cycle through languages: es -> en -> bk -> es
+        if (currentLang === 'es') {
+          newLang = 'en';
+          newPath = currentPath.replace('/es/', '/en/').replace(/^\//, '/en/');
+        } else if (currentLang === 'en') {
+          newLang = 'bk';
+          newPath = currentPath.replace('/en/', '/bk/').replace(/^\//, '/bk/');
+        } else {
+          newLang = 'es';
+          newPath = currentPath.replace('/bk/', '/es/').replace(/^\//, '/es/');
+        }
         
         // Check if the path exists before redirecting
         checkPathExists(newPath).then(exists => {
           if (exists) {
             window.location.href = newPath;
           } else {
-            // Fallback to Spanish home if English path doesn't exist
-            window.location.href = isEnglish ? '/' : '/en/';
+            // Fallback to home page in the new language
+            window.location.href = '/' + newLang + '/';
           }
         });
       }
@@ -178,13 +277,15 @@
       
       // Check browser language preference on first load
       if (!sessionStorage.getItem('languageChecked')) {
-        const userPrefersEnglish = navigator.language.startsWith('en');
-        const shouldRedirect = userPrefersEnglish && !isEnglish && currentPath === '/MetroMan/';
+        const userLang = navigator.language.substring(0, 2);
+        const shouldRedirect = (userLang === 'en' && currentLang !== 'en') || 
+                             (userLang === 'es' && currentLang !== 'es');
         
         if (shouldRedirect) {
-          checkPathExists('/en/').then(exists => {
+          const newPath = '/' + userLang + currentPath;
+          checkPathExists(newPath).then(exists => {
             if (exists) {
-              window.location.href = '/en/';
+              window.location.href = newPath;
             }
           });
         }
@@ -245,10 +346,11 @@
         link.addEventListener('click', function(e) {
           e.preventDefault();
           let url = this.getAttribute('href');
+          const currentLang = getCurrentLanguage();
           
-          // Add language prefix if in English mode
-          if (isEnglish && !url.includes('/en/')) {
-            url = url.replace('/', '/en/');
+          // Add language prefix if needed
+          if (currentLang !== 'es' && !url.includes('/' + currentLang + '/')) {
+            url = url.replace('/', '/' + currentLang + '/');
           }
           
           // Close mobile menu if open
@@ -264,9 +366,9 @@
           fetch(url)
             .then(response => {
               if (!response.ok) {
-                // If English page doesn't exist, try Spanish version
-                if (isEnglish && url.includes('/en/')) {
-                  const spanishUrl = url.replace('/en/', '/');
+                // If language page doesn't exist, try Spanish version
+                if (currentLang !== 'es' && url.includes('/' + currentLang + '/')) {
+                  const spanishUrl = url.replace('/' + currentLang + '/', '/');
                   return fetch(spanishUrl);
                 }
                 throw new Error('Network response was not ok');
@@ -284,6 +386,9 @@
               
               loadingIndicator.style.display = 'none';
               mainContent.style.display = 'block';
+              
+              // Re-apply translations after content load
+              applyTranslations(getCurrentLanguage());
             })
             .catch(error => {
               console.error('Error loading content:', error);
@@ -297,6 +402,8 @@
       window.addEventListener('popstate', function(e) {
         if (e.state && e.state.content) {
           mainContent.innerHTML = e.state.content;
+          // Re-apply translations after navigation
+          applyTranslations(getCurrentLanguage());
         } else {
           window.location.reload();
         }
