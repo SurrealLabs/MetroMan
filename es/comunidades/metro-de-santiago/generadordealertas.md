@@ -1,8 +1,4 @@
-# Metro de Santiago Alert Generator v2
-
-Now with comprehensive incident types and formatted outputs.
-
-```html
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -118,6 +114,7 @@ Now with comprehensive incident types and formatted outputs.
             font-weight: bold;
             display: inline-block;
             margin-right: 10px;
+            cursor: pointer;
         }
         .status-normal {
             background-color: #d4edda;
@@ -130,6 +127,27 @@ Now with comprehensive incident types and formatted outputs.
         .status-suspended {
             background-color: #f8d7da;
             color: #721c24;
+        }
+        .segment-container {
+            display: none;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .segment-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 5px;
+            align-items: center;
+        }
+        .segment-arrow {
+            font-size: 20px;
+        }
+        .add-segment {
+            margin-top: 5px;
+            background-color: #e9ecef;
+            color: #495057;
         }
     </style>
 </head>
@@ -154,6 +172,7 @@ Now with comprehensive incident types and formatted outputs.
                 <button class="procedure-btn" onclick="setProcedure('controlled_access')">🛡️ Accesos Controlados</button>
                 <button class="procedure-btn" onclick="setProcedure('custom')">Personalizado</button>
             </div>
+            <input type="text" id="procedure-text" placeholder="Texto del procedimiento (ej: 'Procedimiento de salud')" style="margin-top: 10px;">
         </div>
 
         <div class="form-group">
@@ -215,11 +234,6 @@ Now with comprehensive incident types and formatted outputs.
                     <option value="Fernando Castillo Velasco">Fernando Castillo Velasco</option>
                     <option value="Plaza de Puente Alto">Plaza de Puente Alto</option>
                 </select>
-                <select id="direction-type" style="width: 80px;">
-                    <option value="">Normal</option>
-                    <option value="⤵️">⤵️</option>
-                    <option value="⤴️">⤴️</option>
-                </select>
             </div>
         </div>
 
@@ -248,16 +262,20 @@ Now with comprehensive incident types and formatted outputs.
                 <span class="status-indicator status-delayed" onclick="setServiceStatus('delayed')">Con Demoras</span>
                 <span class="status-indicator status-suspended" onclick="setServiceStatus('suspended')">Suspendido Parcial</span>
             </div>
-            <div id="service-range" style="display: none; margin-top: 10px;">
-                <label>Servicio disponible entre:</label>
-                <div style="display: flex; gap: 10px;">
-                    <select id="from-station" style="flex: 1;">
-                        <option value="">Desde estación...</option>
-                    </select>
-                    <select id="to-station" style="flex: 1;">
-                        <option value="">Hasta estación...</option>
-                    </select>
+            <div id="segment-container" class="segment-container">
+                <div id="segments">
+                    <div class="segment-row">
+                        <span class="segment-arrow">⤵️</span>
+                        <select class="segment-from" style="flex: 1;">
+                            <option value="">Desde estación...</option>
+                        </select>
+                        <span class="segment-arrow">⤴️</span>
+                        <select class="segment-to" style="flex: 1;">
+                            <option value="">Hasta estación...</option>
+                        </select>
+                    </div>
                 </div>
+                <button class="add-segment" onclick="addSegment()">+ Añadir otro segmento</button>
             </div>
         </div>
 
@@ -275,7 +293,7 @@ Now with comprehensive incident types and formatted outputs.
         let currentProcedure = '';
         let currentServiceStatus = 'normal';
         
-        // This will be replaced with actual station data from JSON
+        // Load stations from JSON
         async function loadStations() {
             try {
                 // In a real implementation, this would fetch from stations.json
@@ -292,20 +310,46 @@ Now with comprehensive incident types and formatted outputs.
                 ];
                 
                 const stationSelect = document.getElementById('station');
-                const fromStation = document.getElementById('from-station');
-                const toStation = document.getElementById('to-station');
+                const segmentFrom = document.querySelector('.segment-from');
+                const segmentTo = document.querySelector('.segment-to');
+                
+                // Clear existing options
+                stationSelect.innerHTML = '<option value="">Seleccionar estación...</option>';
+                segmentFrom.innerHTML = '<option value="">Desde estación...</option>';
+                segmentTo.innerHTML = '<option value="">Hasta estación...</option>';
                 
                 exampleStations.forEach(station => {
                     const option = document.createElement('option');
                     option.value = station;
                     option.textContent = station;
+                    
                     stationSelect.appendChild(option.cloneNode(true));
-                    fromStation.appendChild(option.cloneNode(true));
-                    toStation.appendChild(option);
+                    segmentFrom.appendChild(option.cloneNode(true));
+                    segmentTo.appendChild(option.cloneNode(true));
                 });
             } catch (error) {
                 console.error('Error loading stations:', error);
             }
+        }
+
+        function addSegment() {
+            const segmentsDiv = document.getElementById('segments');
+            const newSegment = document.createElement('div');
+            newSegment.className = 'segment-row';
+            newSegment.innerHTML = `
+                <span class="segment-arrow">⤵️</span>
+                <select class="segment-from" style="flex: 1;">
+                    <option value="">Desde estación...</option>
+                    ${document.querySelector('.segment-from').innerHTML}
+                </select>
+                <span class="segment-arrow">⤴️</span>
+                <select class="segment-to" style="flex: 1;">
+                    <option value="">Hasta estación...</option>
+                    ${document.querySelector('.segment-to').innerHTML}
+                </select>
+                <button onclick="this.parentNode.remove()" style="background: #f8d7da; color: #721c24;">×</button>
+            `;
+            segmentsDiv.appendChild(newSegment);
         }
 
         function setProcedure(procedure) {
@@ -328,7 +372,23 @@ Now with comprehensive incident types and formatted outputs.
             
             document.getElementById('custom-emoji').value = emojiMap[procedure] || '';
             
-            // Set default messages for certain procedures
+            // Set default procedure text
+            const procedureTextMap = {
+                'person_on_tracks': 'Persona en las vías',
+                'severe_accident': 'Accidente grave en las vías',
+                'emergency_brake': 'Freno de emergencia',
+                'train_failure': 'Avería de tren',
+                'door_failure': 'Avería de puertas',
+                'power_outage': 'Corte de corriente',
+                'health_incident': 'Incidente de salud',
+                'service_resumed': 'Servicio reestablecido',
+                'slow_service': 'Servicio lento',
+                'controlled_access': 'Accesos controlados'
+            };
+            
+            document.getElementById('procedure-text').value = procedureTextMap[procedure] || '';
+            
+            // Set default details for certain procedures
             const detailsMap = {
                 'person_on_tracks': 'Persona que descendió a las vías',
                 'severe_accident': 'Accidente grave en las vías',
@@ -358,12 +418,12 @@ Now with comprehensive incident types and formatted outputs.
 
         function setServiceStatus(status) {
             currentServiceStatus = status;
-            const rangeDiv = document.getElementById('service-range');
+            const segmentContainer = document.getElementById('segment-container');
             
             if (status === 'suspended') {
-                rangeDiv.style.display = 'block';
+                segmentContainer.style.display = 'block';
             } else {
-                rangeDiv.style.display = 'none';
+                segmentContainer.style.display = 'none';
             }
             
             // Update UI indicators
@@ -390,17 +450,25 @@ Now with comprehensive incident types and formatted outputs.
 
         function generateAlert() {
             const emoji = document.getElementById('custom-emoji').value;
+            const procedureText = document.getElementById('procedure-text').value;
             const lines = Array.from(document.getElementById('line').selectedOptions)
                 .map(option => option.text);
             const station = document.getElementById('station').value;
             const direction = document.getElementById('direction').value;
-            const directionType = document.getElementById('direction-type').value;
             const includeTime = document.getElementById('include-time').checked;
             const time = document.getElementById('incident-time').value;
             const details = document.getElementById('details').value;
             const notes = document.getElementById('notes').value;
-            const fromStation = document.getElementById('from-station').value;
-            const toStation = document.getElementById('to-station').value;
+            
+            // Get service segments
+            const segments = [];
+            document.querySelectorAll('.segment-row').forEach(row => {
+                const from = row.querySelector('.segment-from').value;
+                const to = row.querySelector('.segment-to').value;
+                if (from && to) {
+                    segments.push({ from, to });
+                }
+            });
 
             let alertText = emoji || '⚠️';
             
@@ -410,23 +478,24 @@ Now with comprehensive incident types and formatted outputs.
                 alertText += ` ${formattedTime}`;
             }
             
+            // Add procedure text
+            if (procedureText) {
+                alertText += ` ${procedureText}`;
+            }
+            
             // Add station if selected
             if (station) {
-                alertText += ` ${station}`;
+                alertText += ` en ${station}`;
             }
             
             // Add direction if selected
             if (direction) {
-                if (directionType) {
-                    alertText += ` ${directionType} ${direction}`;
-                } else {
-                    alertText += ` Dirección ${direction}`;
-                }
+                alertText += ` Dirección ${direction}`;
             }
             
             // Add lines if selected
             if (lines.length > 0) {
-                alertText += ` en ${lines.join(', ')}`;
+                alertText += ` (${lines.join(', ')})`;
             }
             
             // Add details
@@ -435,8 +504,11 @@ Now with comprehensive incident types and formatted outputs.
             }
             
             // Add service status information
-            if (currentServiceStatus === 'suspended' && fromStation && toStation) {
-                alertText += `\n\n⛔ Servicio solo disponible entre:\n${fromStation} ↔ ${toStation}`;
+            if (currentServiceStatus === 'suspended' && segments.length > 0) {
+                alertText += `\n\n⛔ Servicio solo disponible en:\n`;
+                segments.forEach(segment => {
+                    alertText += `⤵️ ${segment.from}\n⤴️ ${segment.to}\n`;
+                });
             } else if (currentServiceStatus === 'delayed') {
                 alertText += `\n\n⌛ Anticipar demoras y esperas mayores a la habitual`;
             }
