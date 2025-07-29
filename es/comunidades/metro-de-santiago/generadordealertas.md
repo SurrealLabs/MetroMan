@@ -164,6 +164,28 @@
             margin-top: 10px;
             display: none;
         }
+        .cause-container {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+        }
+        .access-container {
+            display: none;
+            margin-top: 10px;
+        }
+        .access-input {
+            margin-top: 5px;
+        }
+        .cause-text {
+            margin-top: 5px;
+        }
+        .remove-cause {
+            background-color: #f8d7da;
+            color: #721c24;
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
@@ -213,6 +235,25 @@
                     <option value="en accesos">en accesos</option>
                 </select>
             </div>
+
+            <div id="access-container" class="access-container">
+                <label>Accesos afectados:</label>
+                <input type="text" id="access-input" class="access-input" placeholder="Ej: Acceso norte, acceso oriente">
+            </div>
+            
+            <div id="cause-container" class="cause-container">
+                <label>Causado por:</label>
+                <div class="procedure-buttons">
+                    <button class="procedure-btn" onclick="setCause('manifestacion')">🚶 Manifestación</button>
+                    <button class="procedure-btn" onclick="setCause('incidente_seguridad')">👮 Incidente de seguridad</button>
+                    <button class="procedure-btn" onclick="setCause('accidente')">🚨 Accidente</button>
+                    <button class="procedure-btn" onclick="setCause('averia')">⚙️ Avería técnica</button>
+                    <button class="procedure-btn" onclick="setCause('procedimiento')">🛡️ Procedimiento</button>
+                    <button class="procedure-btn" onclick="setCause('otro')">❔ Otro</button>
+                </div>
+                <input type="text" id="cause-text" class="cause-text" placeholder="Detalles de la causa (opcional)">
+                <button class="remove-cause" onclick="removeCause()">× Eliminar causa</button>
+            </div>
         </div>
 
         <div class="form-group">
@@ -239,6 +280,8 @@
                 <div class="emoji-option" onclick="selectEmoji('👮')">👮</div>
                 <div class="emoji-option" onclick="selectEmoji('🚔')">🚔</div>
                 <div class="emoji-option" onclick="selectEmoji('🚫')">🚫</div>
+                <div class="emoji-option" onclick="selectEmoji('🚶')">🚶</div>
+                <div class="emoji-option" onclick="selectEmoji('❔')">❔</div>
             </div>
             <input type="text" id="custom-emoji" placeholder="O escribe tu emoji aquí">
         </div>
@@ -347,6 +390,7 @@
         let currentProcedure = '';
         let currentServiceStatus = 'normal';
         let delayOnly = false;
+        let currentCause = null;
         
         // Station data
         const metroStations = [
@@ -484,6 +528,16 @@
             document.getElementById('location-selector').style.display = 
                 (['platform_issues', 'security_procedure', 'police_procedure'].includes(procedure)) ? 'block' : 'none';
             
+            // Show/hide access container
+            document.getElementById('access-container').style.display = 
+                (procedure === 'controlled_access') ? 'block' : 'none';
+            
+            // Show/hide cause container for certain procedures
+            const showCauseFor = ['station_closed', 'line_suspended', 'controlled_access', 
+                                'security_procedure', 'police_procedure', 'person_on_tracks'];
+            document.getElementById('cause-container').style.display = 
+                showCauseFor.includes(procedure) ? 'block' : 'none';
+            
             // Set default procedure text
             const procedureTextMap = {
                 'person_on_tracks': 'Persona en las vías',
@@ -548,6 +602,26 @@
                 (procedure === 'delays') ? 'block' : 'none';
         }
 
+        function setCause(cause) {
+            currentCause = cause;
+            const causeTextMap = {
+                'manifestacion': 'debido a manifestación',
+                'incidente_seguridad': 'por incidente de seguridad',
+                'accidente': 'por accidente',
+                'averia': 'por avería técnica',
+                'procedimiento': 'por procedimiento',
+                'otro': ''
+            };
+            
+            document.getElementById('cause-text').value = causeTextMap[cause] || '';
+        }
+
+        function removeCause() {
+            currentCause = null;
+            document.getElementById('cause-text').value = '';
+            document.getElementById('cause-container').style.display = 'none';
+        }
+
         function setServiceStatus(status) {
             currentServiceStatus = status;
             const segmentContainer = document.getElementById('segment-container');
@@ -591,6 +665,8 @@
             const time = document.getElementById('incident-time').value;
             const details = document.getElementById('details').value;
             const notes = document.getElementById('notes').value;
+            const accessInput = document.getElementById('access-input').value;
+            const causeDetails = document.getElementById('cause-text').value;
             
             // Handle problem type if selected
             if (currentProcedure === 'problems_with') {
@@ -622,14 +698,26 @@
                 alertText += ` ${formattedTime}`;
             }
             
-            // Add procedure text
-            if (procedureText) {
-                alertText += ` ${procedureText}`;
-            }
-            
-            // Add station if selected
-            if (station) {
-                alertText += ` en ${station}`;
+            // Special handling for station closed and line suspended
+            if (currentProcedure === 'station_closed' && station) {
+                alertText += ` Estación ${station} cerrada`;
+            } else if (currentProcedure === 'line_suspended' && lines.length > 0) {
+                alertText += ` Línea ${lines.join(', ')} suspendida`;
+            } else if (currentProcedure === 'controlled_access' && station) {
+                alertText += ` Accesos controlados en ${station}`;
+                if (accessInput) {
+                    alertText += ` (${accessInput})`;
+                }
+            } else {
+                // Add procedure text
+                if (procedureText) {
+                    alertText += ` ${procedureText}`;
+                }
+                
+                // Add station if selected
+                if (station) {
+                    alertText += ` en ${station}`;
+                }
             }
             
             // Add direction if selected
@@ -637,9 +725,14 @@
                 alertText += ` Dirección ${direction}`;
             }
             
-            // Add lines if selected
-            if (lines.length > 0) {
+            // Add lines if selected (except for line_suspended)
+            if (lines.length > 0 && currentProcedure !== 'line_suspended') {
                 alertText += ` (${lines.join(', ')})`;
+            }
+            
+            // Add cause if exists
+            if (currentCause && causeDetails) {
+                alertText += ` ${causeDetails}`;
             }
             
             // Add details
