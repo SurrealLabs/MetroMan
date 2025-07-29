@@ -1,9 +1,8 @@
-# Metro de Santiago Alert Generator
+# Metro de Santiago Alert Generator v2
 
-A quick interface to generate alert messages for Metro de Santiago stations.
+Now with comprehensive incident types and formatted outputs.
 
 ```html
-<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -54,6 +53,8 @@ A quick interface to generate alert messages for Metro de Santiago stations.
             border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
+            margin-right: 10px;
+            margin-bottom: 10px;
         }
         button:hover {
             background-color: #004080;
@@ -68,6 +69,7 @@ A quick interface to generate alert messages for Metro de Santiago stations.
         }
         .emoji-selector {
             display: flex;
+            flex-wrap: wrap;
             gap: 5px;
             margin-bottom: 10px;
         }
@@ -76,9 +78,10 @@ A quick interface to generate alert messages for Metro de Santiago stations.
             cursor: pointer;
             padding: 5px;
             border-radius: 4px;
+            background-color: #f0f0f0;
         }
         .emoji-option:hover {
-            background-color: #e9ecef;
+            background-color: #e0e0e0;
         }
         .time-input {
             display: flex;
@@ -88,6 +91,46 @@ A quick interface to generate alert messages for Metro de Santiago stations.
         .time-input input {
             width: 60px;
         }
+        .procedure-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+        .procedure-btn {
+            background-color: #e9ecef;
+            color: #495057;
+            border: 1px solid #ced4da;
+        }
+        .procedure-btn:hover {
+            background-color: #d6d8db;
+        }
+        .direction-container {
+            display: flex;
+            gap: 10px;
+        }
+        .direction-container select {
+            flex: 1;
+        }
+        .status-indicator {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: inline-block;
+            margin-right: 10px;
+        }
+        .status-normal {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .status-delayed {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .status-suspended {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
     </style>
 </head>
 <body>
@@ -95,20 +138,26 @@ A quick interface to generate alert messages for Metro de Santiago stations.
         <h1>Generador de Alertas Metro de Santiago</h1>
         
         <div class="form-group">
-            <label>Tipo de Alerta</label>
-            <select id="alert-type">
-                <option value="delay">🐢 Demora/Frecuencia Irregular</option>
-                <option value="failure">⚙️ Avería Técnica</option>
-                <option value="emergency">⚠️ Emergencia/Freno de Emergencia</option>
-                <option value="resolved">✅ Problema Resuelto</option>
-                <option value="person">🚷 Persona en Vías</option>
-                <option value="access">🛡️ Accesos Controlados</option>
-                <option value="custom">Personalizado (seleccionar emoji)</option>
-            </select>
+            <label>Tipo de Incidente/Procedimiento</label>
+            <div class="procedure-buttons">
+                <button class="procedure-btn" onclick="setProcedure('person_on_tracks')">🚷 Persona en Vías</button>
+                <button class="procedure-btn" onclick="setProcedure('severe_accident')">🚨 Accidente Grave</button>
+                <button class="procedure-btn" onclick="setProcedure('emergency_brake')">⚠️ Frenazo de Emergencia</button>
+                <button class="procedure-btn" onclick="setProcedure('train_failure')">⚙️ Avería de Tren</button>
+                <button class="procedure-btn" onclick="setProcedure('door_failure')">⚙️ Avería de Puertas</button>
+                <button class="procedure-btn" onclick="setProcedure('delays')">⏳ Atrasos</button>
+                <button class="procedure-btn" onclick="setProcedure('power_outage')">🔌 Corte de Corriente</button>
+                <button class="procedure-btn" onclick="setProcedure('health_incident')">🆘 Incidente de Salud</button>
+                <button class="procedure-btn" onclick="setProcedure('express_route')">ℹ️ Ruta Expresa</button>
+                <button class="procedure-btn" onclick="setProcedure('service_resumed')">✅ Servicio Reestablecido</button>
+                <button class="procedure-btn" onclick="setProcedure('slow_service')">🐢 Servicio Lento</button>
+                <button class="procedure-btn" onclick="setProcedure('controlled_access')">🛡️ Accesos Controlados</button>
+                <button class="procedure-btn" onclick="setProcedure('custom')">Personalizado</button>
+            </div>
         </div>
 
         <div class="form-group">
-            <label>Emoji (para alertas personalizadas)</label>
+            <label>Emoji/Icono</label>
             <div class="emoji-selector">
                 <div class="emoji-option" onclick="selectEmoji('🐢')">🐢</div>
                 <div class="emoji-option" onclick="selectEmoji('⚙️')">⚙️</div>
@@ -118,8 +167,16 @@ A quick interface to generate alert messages for Metro de Santiago stations.
                 <div class="emoji-option" onclick="selectEmoji('🛡️')">🛡️</div>
                 <div class="emoji-option" onclick="selectEmoji('🔌')">🔌</div>
                 <div class="emoji-option" onclick="selectEmoji('⌛')">⌛</div>
+                <div class="emoji-option" onclick="selectEmoji('⏳')">⏳</div>
+                <div class="emoji-option" onclick="selectEmoji('🚨')">🚨</div>
+                <div class="emoji-option" onclick="selectEmoji('ℹ️')">ℹ️</div>
+                <div class="emoji-option" onclick="selectEmoji('🚄')">🚄</div>
+                <div class="emoji-option" onclick="selectEmoji('👀')">👀</div>
+                <div class="emoji-option" onclick="selectEmoji('⛔')">⛔</div>
+                <div class="emoji-option" onclick="selectEmoji('🆘')">🆘</div>
+                <div class="emoji-option" onclick="selectEmoji('🤷‍♂️')">🤷‍♂️</div>
             </div>
-            <input type="text" id="custom-emoji" placeholder="O escribe tu emoji aquí" style="display: none;">
+            <input type="text" id="custom-emoji" placeholder="O escribe tu emoji aquí">
         </div>
 
         <div class="form-group">
@@ -144,17 +201,26 @@ A quick interface to generate alert messages for Metro de Santiago stations.
         </div>
 
         <div class="form-group">
-            <label>Dirección del tren (opcional)</label>
-            <select id="direction">
-                <option value="">No especificar</option>
-                <option value="San Pablo">San Pablo</option>
-                <option value="Los Dominicos">Los Dominicos</option>
-                <option value="La Cisterna">La Cisterna</option>
-                <option value="Vespucio Norte">Vespucio Norte</option>
-                <option value="Plaza de Maipú">Plaza de Maipú</option>
-                <option value="Vicente Valdés">Vicente Valdés</option>
-                <!-- More directions can be added -->
-            </select>
+            <label>Dirección del tren</label>
+            <div class="direction-container">
+                <select id="direction">
+                    <option value="">No especificar</option>
+                    <option value="San Pablo">San Pablo</option>
+                    <option value="Los Dominicos">Los Dominicos</option>
+                    <option value="La Cisterna">La Cisterna</option>
+                    <option value="Vespucio Norte">Vespucio Norte</option>
+                    <option value="Plaza de Maipú">Plaza de Maipú</option>
+                    <option value="Vicente Valdés">Vicente Valdés</option>
+                    <option value="Plaza Quilicura">Plaza Quilicura</option>
+                    <option value="Fernando Castillo Velasco">Fernando Castillo Velasco</option>
+                    <option value="Plaza de Puente Alto">Plaza de Puente Alto</option>
+                </select>
+                <select id="direction-type" style="width: 80px;">
+                    <option value="">Normal</option>
+                    <option value="⤵️">⤵️</option>
+                    <option value="⤴️">⤴️</option>
+                </select>
+            </div>
         </div>
 
         <div class="form-group">
@@ -166,92 +232,177 @@ A quick interface to generate alert messages for Metro de Santiago stations.
         </div>
 
         <div class="form-group">
-            <label>Detalles adicionales</label>
-            <textarea id="details" placeholder="Ej: Entre 3 y 7 minutos de espera en los andenes..."></textarea>
+            <label>Detalles principales</label>
+            <textarea id="details" placeholder="Ej: Tren continuó sin servicio..."></textarea>
         </div>
 
         <div class="form-group">
-            <label>Notas adicionales (opcional, aparecerán con 📝)</label>
-            <textarea id="notes" placeholder="Ej: esto empezó con freno de emergencia por procedimiento de salud..."></textarea>
+            <label>Notas adicionales (aparecerán con 👀)</label>
+            <textarea id="notes" placeholder="Ej: Se estará retomando la frecuencia normal..."></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Estado del servicio</label>
+            <div>
+                <span class="status-indicator status-normal" onclick="setServiceStatus('normal')">Normal</span>
+                <span class="status-indicator status-delayed" onclick="setServiceStatus('delayed')">Con Demoras</span>
+                <span class="status-indicator status-suspended" onclick="setServiceStatus('suspended')">Suspendido Parcial</span>
+            </div>
+            <div id="service-range" style="display: none; margin-top: 10px;">
+                <label>Servicio disponible entre:</label>
+                <div style="display: flex; gap: 10px;">
+                    <select id="from-station" style="flex: 1;">
+                        <option value="">Desde estación...</option>
+                    </select>
+                    <select id="to-station" style="flex: 1;">
+                        <option value="">Hasta estación...</option>
+                    </select>
+                </div>
+            </div>
         </div>
 
         <button onclick="generateAlert()">Generar Alerta</button>
+        <button onclick="copyToClipboard()">Copiar al Portapapeles</button>
 
         <div class="form-group">
             <label>Vista previa:</label>
             <div class="alert-preview" id="alert-preview"></div>
         </div>
-
-        <button onclick="copyToClipboard()">Copiar al Portapapeles</button>
     </div>
 
     <script>
+        // Current procedure type
+        let currentProcedure = '';
+        let currentServiceStatus = 'normal';
+        
         // This will be replaced with actual station data from JSON
-        function loadStations() {
-            // TODO: Load stations from JSON file
-            const stationSelect = document.getElementById('station');
-            
-            // Example - to be replaced with actual fetch from stations.json
-            const exampleStations = [
-                "Estación Central",
-                "Santa Isabel",
-                "San Pablo",
-                "Estación del Sol",
-                "Ñuble",
-                "Plaza de Maipú",
-                "Vicente Valdés",
-                "Los Dominicos"
-            ];
-            
-            exampleStations.forEach(station => {
-                const option = document.createElement('option');
-                option.value = station;
-                option.textContent = station;
-                stationSelect.appendChild(option);
-            });
+        async function loadStations() {
+            try {
+                // In a real implementation, this would fetch from stations.json
+                // const response = await fetch('stations.json');
+                // const data = await response.json();
+                
+                // For now we'll use a simplified version
+                const exampleStations = [
+                    "Estación Central", "Santa Isabel", "San Pablo", "Estación del Sol",
+                    "Ñuble", "Plaza de Maipú", "Vicente Valdés", "Los Dominicos",
+                    "Rodrigo de Araya", "Patronato", "Las Torres", "Baquedano",
+                    "Los Héroes", "Blanqueado", "Salvador", "Hospital el Pino",
+                    "Vespucio Norte", "Einstein", "Cal y Canto", "Plaza Quilicura"
+                ];
+                
+                const stationSelect = document.getElementById('station');
+                const fromStation = document.getElementById('from-station');
+                const toStation = document.getElementById('to-station');
+                
+                exampleStations.forEach(station => {
+                    const option = document.createElement('option');
+                    option.value = station;
+                    option.textContent = station;
+                    stationSelect.appendChild(option.cloneNode(true));
+                    fromStation.appendChild(option.cloneNode(true));
+                    toStation.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading stations:', error);
+            }
         }
 
-        document.getElementById('alert-type').addEventListener('change', function() {
-            const customEmojiField = document.getElementById('custom-emoji');
-            if (this.value === 'custom') {
-                customEmojiField.style.display = 'block';
-            } else {
-                customEmojiField.style.display = 'none';
+        function setProcedure(procedure) {
+            currentProcedure = procedure;
+            const emojiMap = {
+                'person_on_tracks': '🚷',
+                'severe_accident': '🚨',
+                'emergency_brake': '⚠️',
+                'train_failure': '⚙️',
+                'door_failure': '⚙️',
+                'delays': '⏳',
+                'power_outage': '🔌',
+                'health_incident': '🆘',
+                'express_route': 'ℹ️',
+                'service_resumed': '✅',
+                'slow_service': '🐢',
+                'controlled_access': '🛡️',
+                'custom': ''
+            };
+            
+            document.getElementById('custom-emoji').value = emojiMap[procedure] || '';
+            
+            // Set default messages for certain procedures
+            const detailsMap = {
+                'person_on_tracks': 'Persona que descendió a las vías',
+                'severe_accident': 'Accidente grave en las vías',
+                'emergency_brake': 'Procedimiento de freno de emergencia',
+                'train_failure': 'Tren detenido bajo revisión técnica',
+                'door_failure': 'Avería en puertas de tren',
+                'power_outage': 'Corte de corriente momentáneo',
+                'health_incident': 'Procedimiento de salud activado',
+                'service_resumed': 'Servicio se ha restablecido',
+                'slow_service': 'Operando con lentitud',
+                'controlled_access': 'Accesos controlados en estación'
+            };
+            
+            if (detailsMap[procedure]) {
+                document.getElementById('details').value = detailsMap[procedure];
             }
-        });
+            
+            // Special handling for service status
+            if (procedure === 'severe_accident') {
+                setServiceStatus('suspended');
+            } else if (['train_failure', 'door_failure', 'person_on_tracks'].includes(procedure)) {
+                setServiceStatus('delayed');
+            } else if (procedure === 'service_resumed') {
+                setServiceStatus('normal');
+            }
+        }
+
+        function setServiceStatus(status) {
+            currentServiceStatus = status;
+            const rangeDiv = document.getElementById('service-range');
+            
+            if (status === 'suspended') {
+                rangeDiv.style.display = 'block';
+            } else {
+                rangeDiv.style.display = 'none';
+            }
+            
+            // Update UI indicators
+            document.querySelectorAll('.status-indicator').forEach(el => {
+                el.style.backgroundColor = '';
+                el.style.color = '';
+            });
+            
+            if (status === 'normal') {
+                document.querySelector('.status-normal').style.backgroundColor = '#d4edda';
+                document.querySelector('.status-normal').style.color = '#155724';
+            } else if (status === 'delayed') {
+                document.querySelector('.status-delayed').style.backgroundColor = '#fff3cd';
+                document.querySelector('.status-delayed').style.color = '#856404';
+            } else if (status === 'suspended') {
+                document.querySelector('.status-suspended').style.backgroundColor = '#f8d7da';
+                document.querySelector('.status-suspended').style.color = '#721c24';
+            }
+        }
 
         function selectEmoji(emoji) {
             document.getElementById('custom-emoji').value = emoji;
         }
 
         function generateAlert() {
-            const alertType = document.getElementById('alert-type').value;
-            const customEmoji = document.getElementById('custom-emoji').value;
+            const emoji = document.getElementById('custom-emoji').value;
             const lines = Array.from(document.getElementById('line').selectedOptions)
                 .map(option => option.text);
             const station = document.getElementById('station').value;
             const direction = document.getElementById('direction').value;
+            const directionType = document.getElementById('direction-type').value;
             const includeTime = document.getElementById('include-time').checked;
             const time = document.getElementById('incident-time').value;
             const details = document.getElementById('details').value;
             const notes = document.getElementById('notes').value;
+            const fromStation = document.getElementById('from-station').value;
+            const toStation = document.getElementById('to-station').value;
 
-            let emoji;
-            if (alertType === 'custom') {
-                emoji = customEmoji || '⚠️';
-            } else {
-                const emojiMap = {
-                    'delay': '🐢',
-                    'failure': '⚙️',
-                    'emergency': '⚠️',
-                    'resolved': '✅',
-                    'person': '🚷',
-                    'access': '🛡️'
-                };
-                emoji = emojiMap[alertType] || '⚠️';
-            }
-
-            let alertText = emoji;
+            let alertText = emoji || '⚠️';
             
             // Add time if included
             if (includeTime && time) {
@@ -266,7 +417,11 @@ A quick interface to generate alert messages for Metro de Santiago stations.
             
             // Add direction if selected
             if (direction) {
-                alertText += ` Dirección ${direction}`;
+                if (directionType) {
+                    alertText += ` ${directionType} ${direction}`;
+                } else {
+                    alertText += ` Dirección ${direction}`;
+                }
             }
             
             // Add lines if selected
@@ -276,12 +431,24 @@ A quick interface to generate alert messages for Metro de Santiago stations.
             
             // Add details
             if (details) {
-                alertText += `\n\n⌛ ${details}`;
+                alertText += `\n\n${emoji === 'ℹ️' ? 'ℹ️' : '⌛'} ${details}`;
+            }
+            
+            // Add service status information
+            if (currentServiceStatus === 'suspended' && fromStation && toStation) {
+                alertText += `\n\n⛔ Servicio solo disponible entre:\n${fromStation} ↔ ${toStation}`;
+            } else if (currentServiceStatus === 'delayed') {
+                alertText += `\n\n⌛ Anticipar demoras y esperas mayores a la habitual`;
             }
             
             // Add notes if provided
             if (notes) {
-                alertText += `\n\n📝 ${notes}`;
+                alertText += `\n\n👀 ${notes}`;
+            }
+            
+            // Special handling for service resumed
+            if (currentProcedure === 'service_resumed') {
+                alertText += `\n\nℹ️ Recordar que esto no significa que estará todo bien, anticipar atrasos, demoras y saturación en andenes`;
             }
 
             document.getElementById('alert-preview').textContent = alertText;
@@ -302,6 +469,9 @@ A quick interface to generate alert messages for Metro de Santiago stations.
             const hours = now.getHours().toString().padStart(2, '0');
             const minutes = now.getMinutes().toString().padStart(2, '0');
             document.getElementById('incident-time').value = `${hours}:${minutes}`;
+            
+            // Set default procedure
+            setProcedure('custom');
         };
     </script>
 </body>
