@@ -517,16 +517,16 @@
                 'door_failure': 'Avería en puertas de tren',
                 'delays': 'Anticipar demoras en el servicio',
                 'power_outage': 'Corte de corriente momentáneo',
-                'health_incident': 'Procedimiento de salud activado',
+                'health_incident': 'Procedimiento de salud',
                 'express_route': 'Trenes operando como ruta expresa',
                 'service_resumed': 'Servicio se ha restablecido',
                 'slow_service': 'Operando con lentitud',
                 'controlled_access': 'Accesos controlados en estación',
                 'station_closed': 'Estación cerrada temporalmente',
                 'line_suspended': 'Servicio suspendido en toda la línea',
-                'problems_with': 'Problemas técnicos detectados',
+                'problems_with': 'Problemas técnicos',
                 'platform_issues': 'Problemas reportados en andenes',
-                'security_procedure': 'Procedimiento de seguridad activado',
+                'security_procedure': 'Procedimiento de seguridad',
                 'police_procedure': 'Procedimiento policial en curso'
             };
             
@@ -651,7 +651,7 @@
             
             // Add service status information
             if (currentServiceStatus === 'suspended' && segments.length > 0) {
-                alertText += `\n\n⛔ Servicio solo disponible en:\n`;
+                alertText += `\n\n⛔ Servicio solo disponible entre las estaciones:\n`;
                 segments.forEach(segment => {
                     alertText += `⤵️ ${segment.from}\n⤴️ ${segment.to}\n`;
                 });
@@ -666,7 +666,7 @@
             
             // Special handling for service resumed
             if (currentProcedure === 'service_resumed') {
-                alertText += `\n\nℹ️ Recordar que esto no significa que estará todo bien, anticipar atrasos, demoras y saturación en andenes`;
+                alertText += `\n\nℹ️ Recordar que esto no significa que el servicio esté funcionando al 100% instantáneamente, anticipar atrasos, demoras y saturación en andenes`;
             }
 
             document.getElementById('alert-preview').textContent = alertText;
