@@ -350,13 +350,58 @@
         
         // Station data
         const metroStations = [
-            "San Pablo", "Los Dominicos", "Hospital El Pino", "Vespucio Norte", 
-            "Plaza Quilicura", "Fernando Castillo Velasco", "Tobalaba", 
-            "Plaza de Puente Alto", "Vicuña Mackenna", "La Cisterna", 
-            "Plaza de Maipú", "Vicente Valdés", "Cerrillos", "Los Leones",
-            "Estación Central", "Santa Isabel", "Ñuble", "Estación del Sol",
-            "Rodrigo de Araya", "Patronato", "Las Torres", "Baquedano",
-            "Los Héroes", "Blanqueado", "Salvador", "Einstein", "Cal y Canto"
+            // Line 1
+            "San Pablo L1", "Neptuno", "Pajaritos", "Las Rejas", "Ecuador", 
+            "San Alberto Hurtado", "Universidad de Santiago", "Estación Central", 
+            "U.L.A.", "República", "Los Héroes L1", "La Moneda", "Universidad de Chile L1", 
+            "Santa Lucía", "Universidad Católica", "Baquedano L1", "Salvador", 
+            "Manuel Montt", "Pedro de Valdivia", "Los Leones L1", "Tobalaba L1", 
+            "El Golf", "Alcántara", "Escuela Militar", "Manquehue", 
+            "Hernando de Magallanes", "Los Dominicos",
+
+            // Line 2
+            "Vespucio Norte", "Zapadores", "Dorsal", "Einstein", "Cementerios", 
+            "Cerro Blanco", "Patronato", "Puente Cal y Canto L2", "Santa Ana L2", 
+            "Los Héroes L2", "Toesca", "Parque O'Higgins", "Rondizzoni", 
+            "Franklin L2", "El Llano", "San Miguel", "Lo Vial", "Departamental", 
+            "Ciudad del Niño", "Lo Ovalle", "El Parrón", "La Cisterna L2", 
+            "El Bosque", "Observatorio", "Copa Lo Martinez", "Hospital El Pino",
+
+            // Line 3
+            "Plaza Quilicura", "Lo Cruzat", "Ferrocarril", "Los Libertadores", 
+            "Cardenal Caro", "Vivaceta", "Conchalí", "Plaza Chacabuco", 
+            "Hospitales", "Puente Cal y Canto L3", "Plaza de Armas L3", 
+            "Universidad de Chile L3", "Parque Almagro", "Matta", "Irarrázaval L3", 
+            "Monseñor Eyzaguirre", "Ñuñoa L3", "Chile España", "Villa Frei", 
+            "Plaza Egaña L3", "Fernando Castillo Velasco",
+
+            // Line 4
+            "Tobalaba L4", "Cristóbal Colón", "Francisco Bilbao", "Príncipe de Gales", 
+            "Simón Bolivar", "Plaza Egaña L4", "Los Orientales", "Grecia", 
+            "Los Presidentes", "Quilín", "Las Torres", "Macul", "Vicuña Mackenna L4", 
+            "Vicente Valdés L4", "Rojas Magallanes", "Trinidad", 
+            "San José de la Estrella", "Los Quillayes", "Elisa Correa", 
+            "Hospital Sótero del Río", "Protectora de la Infancia", "Las Mercedes", 
+            "Plaza de Puente Alto",
+
+            // Line 4A
+            "Vicuña Mackenna L4A", "Santa Julia", "La Granja", "Santa Rosa", 
+            "San Ramón", "La Cisterna L4A",
+
+            // Line 5
+            "Plaza de Maipú", "Santiago Bueras", "Del Sol", "Monte Tabor", 
+            "Las Parcelas", "Laguna Sur", "Barrancas", "Pudahuel", "San Pablo L5", 
+            "Lo Prado", "Blanqueado", "Gruta de Lourdes", "Quinta Normal", 
+            "Cumming", "Santa Ana L5", "Plaza de Armas L5", "Bellas Artes", 
+            "Baquedano L5", "Parque Bustamante", "Santa Isabel", "Irarrázaval L5", 
+            "Ñuble L5", "Rodrigo de Araya", "Carlos Valdovinos", "Camino Agrícola", 
+            "San Joaquín", "Pedrero", "Mirador", "Bellavista de La Florida", 
+            "Vicente Valdés L5",
+
+            // Line 6
+            "Cerrillos", "Lo Valledor", "Pdte. Pedro Aguirre Cerda", "Franklin L6", 
+            "Bío Bío", "Ñuble L6", "Estadio Nacional", "Ñuñoa L6", 
+            "Inés de Suárez", "Los Leones L6"
         ].sort();
 
         // Load stations
@@ -446,8 +491,10 @@
                 'emergency_brake': 'Freno de emergencia',
                 'train_failure': 'Avería de tren',
                 'door_failure': 'Avería de puertas',
+                'delays': 'Atrasos en el servicio',
                 'power_outage': 'Corte de corriente',
                 'health_incident': 'Incidente de salud',
+                'express_route': 'Ruta expresa',
                 'service_resumed': 'Servicio reestablecido',
                 'slow_service': 'Servicio lento',
                 'controlled_access': 'Accesos controlados',
@@ -459,4 +506,191 @@
                 'police_procedure': 'Procedimiento policial'
             };
             
-            d
+            document.getElementById('procedure-text').value = procedureTextMap[procedure] || '';
+            
+            // Set default details for certain procedures
+            const detailsMap = {
+                'person_on_tracks': 'Persona que descendió a las vías',
+                'severe_accident': 'Accidente grave en las vías',
+                'emergency_brake': 'Procedimiento de freno de emergencia',
+                'train_failure': 'Tren detenido bajo revisión técnica',
+                'door_failure': 'Avería en puertas de tren',
+                'delays': 'Anticipar demoras en el servicio',
+                'power_outage': 'Corte de corriente momentáneo',
+                'health_incident': 'Procedimiento de salud activado',
+                'express_route': 'Trenes operando como ruta expresa',
+                'service_resumed': 'Servicio se ha restablecido',
+                'slow_service': 'Operando con lentitud',
+                'controlled_access': 'Accesos controlados en estación',
+                'station_closed': 'Estación cerrada temporalmente',
+                'line_suspended': 'Servicio suspendido en toda la línea',
+                'problems_with': 'Problemas técnicos detectados',
+                'platform_issues': 'Problemas reportados en andenes',
+                'security_procedure': 'Procedimiento de seguridad activado',
+                'police_procedure': 'Procedimiento policial en curso'
+            };
+            
+            if (detailsMap[procedure]) {
+                document.getElementById('details').value = detailsMap[procedure];
+            }
+            
+            // Special handling for service status
+            if (procedure === 'severe_accident' || procedure === 'line_suspended') {
+                setServiceStatus('suspended');
+            } else if (['train_failure', 'door_failure', 'person_on_tracks', 'delays', 'slow_service'].includes(procedure)) {
+                setServiceStatus('delayed');
+            } else if (procedure === 'service_resumed') {
+                setServiceStatus('normal');
+            }
+            
+            // Show delay-only option for delays
+            document.getElementById('delay-only-container').style.display = 
+                (procedure === 'delays') ? 'block' : 'none';
+        }
+
+        function setServiceStatus(status) {
+            currentServiceStatus = status;
+            const segmentContainer = document.getElementById('segment-container');
+            
+            if (status === 'suspended') {
+                segmentContainer.style.display = 'block';
+            } else {
+                segmentContainer.style.display = 'none';
+            }
+            
+            // Update UI indicators
+            document.querySelectorAll('.status-indicator').forEach(el => {
+                el.style.backgroundColor = '';
+                el.style.color = '';
+            });
+            
+            if (status === 'normal') {
+                document.querySelector('.status-normal').style.backgroundColor = '#d4edda';
+                document.querySelector('.status-normal').style.color = '#155724';
+            } else if (status === 'delayed') {
+                document.querySelector('.status-delayed').style.backgroundColor = '#fff3cd';
+                document.querySelector('.status-delayed').style.color = '#856404';
+            } else if (status === 'suspended') {
+                document.querySelector('.status-suspended').style.backgroundColor = '#f8d7da';
+                document.querySelector('.status-suspended').style.color = '#721c24';
+            }
+        }
+
+        function selectEmoji(emoji) {
+            document.getElementById('custom-emoji').value = emoji;
+        }
+
+        function generateAlert() {
+            const emoji = document.getElementById('custom-emoji').value;
+            let procedureText = document.getElementById('procedure-text').value;
+            const lines = Array.from(document.getElementById('line').selectedOptions)
+                .map(option => option.text);
+            const station = document.getElementById('station').value;
+            const direction = document.getElementById('direction').value;
+            const includeTime = document.getElementById('include-time').checked;
+            const time = document.getElementById('incident-time').value;
+            const details = document.getElementById('details').value;
+            const notes = document.getElementById('notes').value;
+            
+            // Handle problem type if selected
+            if (currentProcedure === 'problems_with') {
+                const problemType = document.getElementById('problem-type').value;
+                procedureText += ` ${problemType}`;
+            }
+            
+            // Handle location type if selected
+            if (['platform_issues', 'security_procedure', 'police_procedure'].includes(currentProcedure)) {
+                const locationType = document.getElementById('location-type').value;
+                procedureText += ` ${locationType}`;
+            }
+            
+            // Get service segments
+            const segments = [];
+            document.querySelectorAll('.segment-row').forEach(row => {
+                const from = row.querySelector('.segment-from').value;
+                const to = row.querySelector('.segment-to').value;
+                if (from && to) {
+                    segments.push({ from, to });
+                }
+            });
+
+            let alertText = emoji || '⚠️';
+            
+            // Add time if included
+            if (includeTime && time) {
+                const formattedTime = `[${time}]`;
+                alertText += ` ${formattedTime}`;
+            }
+            
+            // Add procedure text
+            if (procedureText) {
+                alertText += ` ${procedureText}`;
+            }
+            
+            // Add station if selected
+            if (station) {
+                alertText += ` en ${station}`;
+            }
+            
+            // Add direction if selected
+            if (direction) {
+                alertText += ` Dirección ${direction}`;
+            }
+            
+            // Add lines if selected
+            if (lines.length > 0) {
+                alertText += ` (${lines.join(', ')})`;
+            }
+            
+            // Add details
+            if (details && !(currentProcedure === 'delays' && delayOnly)) {
+                alertText += `\n\n${emoji === 'ℹ️' ? 'ℹ️' : '⌛'} ${details}`;
+            } else if (currentProcedure === 'delays' && delayOnly) {
+                alertText += `\n\n⌛ Anticipar demoras en el servicio`;
+            }
+            
+            // Add service status information
+            if (currentServiceStatus === 'suspended' && segments.length > 0) {
+                alertText += `\n\n⛔ Servicio solo disponible en:\n`;
+                segments.forEach(segment => {
+                    alertText += `⤵️ ${segment.from}\n⤴️ ${segment.to}\n`;
+                });
+            } else if (currentServiceStatus === 'delayed' && currentProcedure !== 'delays') {
+                alertText += `\n\n⌛ Anticipar demoras y esperas mayores a la habitual`;
+            }
+            
+            // Add notes if provided
+            if (notes) {
+                alertText += `\n\n👀 ${notes}`;
+            }
+            
+            // Special handling for service resumed
+            if (currentProcedure === 'service_resumed') {
+                alertText += `\n\nℹ️ Recordar que esto no significa que estará todo bien, anticipar atrasos, demoras y saturación en andenes`;
+            }
+
+            document.getElementById('alert-preview').textContent = alertText;
+        }
+
+        function copyToClipboard() {
+            const preview = document.getElementById('alert-preview');
+            navigator.clipboard.writeText(preview.textContent)
+                .then(() => alert('Alerta copiada al portapapeles!'))
+                .catch(err => alert('Error al copiar: ' + err));
+        }
+
+        // Initialize
+        window.onload = function() {
+            loadStations();
+            // Set current time as default
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('incident-time').value = `${hours}:${minutes}`;
+            
+            // Set default procedure
+            setProcedure('custom');
+        };
+    </script>
+</body>
+</html>
